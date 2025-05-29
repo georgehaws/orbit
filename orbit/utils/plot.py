@@ -1,4 +1,7 @@
-import pkg_resources
+try:
+    from importlib import resources
+except ImportError:  # pragma: no cover - fallback for older Python
+    import importlib_resources as resources
 import functools
 import logging
 from matplotlib import pyplot as plt
@@ -7,10 +10,8 @@ STYLE_FILE_NAME = "plot_style"
 
 
 def get_orbit_style():
-    path = pkg_resources.resource_filename(
-        "orbit", "stylelib/{}.mplstyle".format(STYLE_FILE_NAME)
-    )
-    return path
+    path = resources.files("orbit") / f"stylelib/{STYLE_FILE_NAME}.mplstyle"
+    return str(path)
 
 
 def orbit_style_decorator(func):
