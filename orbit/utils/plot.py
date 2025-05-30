@@ -25,7 +25,7 @@ def orbit_style_decorator(func):
         if use_orbit_style:
             orbit_style_path = get_orbit_style()
             try:
-                with plt.style.context(orbit_style_path):
+                with plt.style.context(orbit_style_path):  # type: ignore[reportGeneralTypeIssues]
                     return func(*args, **kwargs)
             except:
                 logging.info(
