@@ -7,20 +7,11 @@ import pandas as pd
 import numpy as np
 import math
 import os
-<<<<<<< Updated upstream
-
-try:
-    from importlib import metadata
-except ImportError:  # pragma: no cover - fallback for older Python
-    import importlib_metadata as metadata
-||||||| Stash base
-import pkg_resources
-=======
 
 from importlib import metadata
->>>>>>> Stashed changes
 import statsmodels.api as sm
 from scipy import stats
+from matplotlib.markers import MarkerStyle
 
 from ..constants.constants import PredictionKeys
 from orbit.utils.general import is_empty_dataframe, is_ordered_datetime
@@ -151,7 +142,7 @@ def plot_predicted_data(
         ax.scatter(
             _training_actual_df[date_col].values,
             _training_actual_df[actual_col].values,
-            marker=".",
+            marker=MarkerStyle("."),
             color=PredPal.ACTUAL_OBS.value,
             alpha=0.8,
             s=markersize,
@@ -194,7 +185,7 @@ def plot_predicted_data(
             ax.scatter(
                 test_actual_df[date_col].values,
                 test_actual_df[actual_col].values,
-                marker=".",
+                marker=MarkerStyle("."),
                 color=PredPal.TEST_OBS.value,
                 s=markersize,
                 label="test response",
@@ -469,6 +460,8 @@ def plot_bt_predictions2(
     if figsize is None:
         figsize = (16, 8)
 
+    fig_paths = list()
+
     if fig_dir:
         if not os.path.isdir(fig_dir) or not os.path.exists(fig_dir):
             raise PlotException(
@@ -476,7 +469,6 @@ def plot_bt_predictions2(
                     os.path.abspath(fig_dir)
                 )
             )
-        fig_paths = list()
 
     metric_vals = bt_pred_df.groupby(BacktestFitKeys.SPLIT_KEY.value).apply(
         lambda x: metrics(
@@ -489,6 +481,10 @@ def plot_bt_predictions2(
         split_key_list_ = bt_pred_df[BacktestFitKeys.SPLIT_KEY.value].unique()
     else:
         split_key_list_ = split_key_list
+
+    # initilize safe default values
+    xlim = (0, 1)
+    ylim = (0, 1)
 
     if fix_xylim:
         all_values = np.concatenate(
@@ -519,7 +515,7 @@ def plot_bt_predictions2(
         ax.scatter(
             train_df[BacktestFitKeys.DATE.value],
             train_df[BacktestFitKeys.ACTUAL.value],
-            marker=".",
+            marker=MarkerStyle("."),
             color=PredPal.ACTUAL_OBS.value,
             alpha=0.8,
             s=markersize,
@@ -530,7 +526,7 @@ def plot_bt_predictions2(
         ax.scatter(
             test_df[BacktestFitKeys.DATE.value],
             test_df[BacktestFitKeys.ACTUAL.value],
-            marker=".",
+            marker=MarkerStyle("."),
             color=PredPal.TEST_OBS.value,
             alpha=0.8,
             s=markersize,
@@ -554,7 +550,7 @@ def plot_bt_predictions2(
             )
         if fix_xylim:
             ax.set_xlim(xlim)
-            ax.set_ylim(ylim)
+            ax.set_ylim(*ylim) # unpack the tuple
 
         ax.legend()
         plt.suptitle(title, fontsize=fontsize)
