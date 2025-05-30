@@ -7,11 +7,18 @@ import pandas as pd
 import numpy as np
 import math
 import os
+<<<<<<< Updated upstream
 
 try:
     from importlib import metadata
 except ImportError:  # pragma: no cover - fallback for older Python
     import importlib_metadata as metadata
+||||||| Stash base
+import pkg_resources
+=======
+
+from importlib import metadata
+>>>>>>> Stashed changes
 import statsmodels.api as sm
 from scipy import stats
 

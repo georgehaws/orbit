@@ -1,7 +1,13 @@
+<<<<<<< Updated upstream
 try:
     from importlib import resources
 except ImportError:  # pragma: no cover - fallback for older Python
     import importlib_resources as resources
+||||||| Stash base
+import pkg_resources
+=======
+from importlib import resources
+>>>>>>> Stashed changes
 import functools
 import logging
 from matplotlib import pyplot as plt
