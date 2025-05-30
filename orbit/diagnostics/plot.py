@@ -7,7 +7,11 @@ import pandas as pd
 import numpy as np
 import math
 import os
-import pkg_resources
+
+try:
+    from importlib import metadata
+except ImportError:  # pragma: no cover - fallback for older Python
+    import importlib_metadata as metadata
 import statsmodels.api as sm
 from scipy import stats
 
@@ -561,7 +565,7 @@ def plot_bt_predictions2(
     if fig_dir and export_gif:
         package_name = "imageio"
         try:
-            pkg_resources.get_distribution(package_name)
+            metadata.version(package_name)
             import imageio
 
             with imageio.get_writer(
@@ -570,7 +574,7 @@ def plot_bt_predictions2(
                 for fig_path in fig_paths:
                     image = imageio.imread(fig_path)
                     writer.append_data(image)
-        except pkg_resources.DistributionNotFound:
+        except metadata.PackageNotFoundError:
             logger.error(
                 (
                     "{} not installed, which is necessary for gif animation".format(
