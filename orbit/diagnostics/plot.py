@@ -482,9 +482,8 @@ def plot_bt_predictions2(
     else:
         split_key_list_ = split_key_list
 
-    # initilize safe default values
-    xlim = (0, 1)
-    ylim = (0, 1)
+    xlim = None
+    ylim = None
 
     if fix_xylim:
         all_values = np.concatenate(
@@ -548,9 +547,9 @@ def plot_bt_predictions2(
                 color=PredPal.HOLDOUT_VERTICAL_LINE.value,
                 alpha=0.8,
             )
-        if fix_xylim:
+        if fix_xylim and ylim is not None:
             ax.set_xlim(xlim)
-            ax.set_ylim(*ylim)  # unpack the tuple
+            ax.set_ylim(*ylim) # unpack the tuple
 
         ax.legend()
         plt.suptitle(title, fontsize=fontsize)
