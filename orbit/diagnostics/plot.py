@@ -550,7 +550,7 @@ def plot_bt_predictions2(
             )
         if fix_xylim:
             ax.set_xlim(xlim)
-            ax.set_ylim(*ylim) # unpack the tuple
+            ax.set_ylim(*ylim)  # unpack the tuple
 
         ax.legend()
         plt.suptitle(title, fontsize=fontsize)
