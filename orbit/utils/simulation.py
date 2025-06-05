@@ -1,8 +1,6 @@
 import numpy as np
-import pandas as pd
 from statsmodels.tsa.arima_process import ArmaProcess
 import math
-from math import pi
 from orbit.exceptions import IllegalArgument
 
 
